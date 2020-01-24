@@ -1,20 +1,21 @@
 const TestUtil = require('../testUtil');
-const list = [1, 2, 4, 3, 6, 5, 2, 4, 5];
-const sum = 7;
+const nums = [2, 7, 11, 15];
+const target = 9;
 
-function twoSum(list) {
-    let cache = [];
-    for (let num of list) {
-        let index = cache.indexOf(sum - num);
-        if (index !== -1) {
-            return [cache[index], num];
-            // console.log(cache[index], num);
+function twoSum(nums, target) {
+    let cache = {};
+    for (let i = 0; i < nums.length; i++) {
+        let rest = target - nums[i];
+        if (rest in cache) {
+            return [cache[rest], i];
         } else {
-            cache.push(sum - num);
+            cache[nums[i]] = i;
         }
     }
 }
 
-console.time();
-TestUtil.iterateBy(100000, () => twoSum(list));
-console.timeEnd();
+console.log(twoSum(nums, target));
+
+// console.time();
+// TestUtil.iterateBy(100000, () => twoSum(nums, target));
+// console.timeEnd();

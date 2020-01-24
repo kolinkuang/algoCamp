@@ -1,12 +1,13 @@
 const TestUtil = require('../testUtil');
 
-function fib(n) {
+function fib(N) {
     let cache = [];
-    cache[1] = cache[2] = 1;
-    for (let i = 3; i <= n; i++) {
+    cache[0] = 0;
+    cache[1] = 1;
+    for (let i = 2; i <= N; i++) {
         cache[i] = cache[i - 1] + cache[i - 2];
     }
-    return cache[n];
+    return cache[N];
 }
 
 console.time();
