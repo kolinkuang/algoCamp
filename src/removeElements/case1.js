@@ -22,7 +22,7 @@
  * @return {ListNode}
  */
 let removeElements = function(head, val) {
-    let cache = [];
+    let returned = null;
     let previous;
     let current = head;
     while (current) {
@@ -33,13 +33,13 @@ let removeElements = function(head, val) {
             }
             current.next = null;
         } else {
-            cache.push(current);
+            returned = returned || current;
             previous = current;
         }
         current = next;
     }
 
-    return cache[0] || null;
+    return returned || null;
 };
 
 function ListNode(val) {
