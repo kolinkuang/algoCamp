@@ -80,8 +80,8 @@ function ListNode(val) {
 }
 
 console.log(hasCycle(head));
-// console.log(hasCycle(head));
-// console.log(hasCycle(head));
+// console.log(141.hasCycle(head));
+// console.log(141.hasCycle(head));
 
 // function printList(head) {
 //     let current = head;
@@ -108,6 +108,6 @@ console.log(hasCycle(head));
 // }
 //
 // let head = generateRawList();
-// let newHead = reverseList(head);
+// let newHead = 206.reverseList(head);
 // printList(newHead);
 //leetcode submit region end(Prohibit modification and deletion)

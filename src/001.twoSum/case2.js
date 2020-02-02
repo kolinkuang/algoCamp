@@ -1,4 +1,4 @@
-const TestUtil = require('../testUtil');
+// const TestUtil = require('../testUtil');
 const nums = [2, 7, 11, 15];
 const target = 9;
 
@@ -17,5 +17,5 @@ function twoSum(nums, target) {
 console.log(twoSum(nums, target));
 
 // console.time();
-// TestUtil.iterateBy(100000, () => twoSum(nums, target));
+// TestUtil.iterateBy(100000, () => 001.twoSum(nums, target));
 // console.timeEnd();
