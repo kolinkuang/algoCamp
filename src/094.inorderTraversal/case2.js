@@ -29,18 +29,19 @@
  */
 let inorderTraversal = function (root) {
     let result = [];
-    _inorderTraversal(root, result);
+    let stack = [];
+    let current = root;
+    while (current || stack.length) {
+        while (current) {
+            stack.push(current);
+            current = current.left;
+        }
+        current = stack.pop();
+        result.push(current.val);
+        current = current.right;
+    }
     return result;
 };
-
-function _inorderTraversal(root, result) {
-    if (root === null) {
-        return;
-    }
-    _inorderTraversal(root.left, result);
-    result.push(root.val);
-    _inorderTraversal(root.right, result);
-}
 
 function TreeNode(val) {
     this.val = val;
