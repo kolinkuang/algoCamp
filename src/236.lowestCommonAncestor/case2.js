@@ -48,7 +48,7 @@
  * @param {TreeNode} q
  * @return {TreeNode}
  */
-let lowestCommonAncestor = function(root, p, q) {
+let lowestCommonAncestor = function (root, p, q) {
     if (!root) {
         return null;
     }
@@ -85,20 +85,64 @@ let lowestCommonAncestor = function(root, p, q) {
         current = current.right;
     }
 
-    current = p;
-    while (current) {
-        ancestors.add(current);
-        current = parentMap[current];
+    while (p) {
+        ancestors.add(p);
+        p = parentMap[p];
     }
 
-    current = q;
-    while (current) {
-        if (ancestors.has(current)) {
-            return current;
-        }
-        current = parentMap[current];
+    let ancestorList = Array.from(ancestors);
+    while (!ancestorList.some(node => node.val === q.val)) {
+        q = parentMap[q];
     }
 
-    return null;
+    return q;
 };
+
+function TreeNode(val) {
+    this.val = val;
+    this.left = this.right = null;
+}
+
+function buildTreeNode(val) {
+    return new TreeNode(val);
+}
+
+// const TREE_NODE = [
+//     'left',
+//     'right'
+// ];
+
+function buildBinaryTree(treeValues) {
+    let treeNodeList = [];
+    for (let value of treeValues) {
+        treeNodeList.push(buildTreeNode(value));
+    }
+
+    let root = treeNodeList.shift();
+    let current = root;
+
+    while (treeNodeList.length) {
+        _bindTreeNode(current, treeNodeList);
+
+        // current.left = treeNodeList.shift();
+        // current.right = treeNodeList.shift();
+        // current = current.left;
+        // current.left = treeNodeList.shift();
+        // current.right = treeNodeList.shift();
+    }
+
+    return root;
+}
+
+function _bindTreeNode(treeNode, treeNodeList) {
+    treeNode.left = treeNodeList.shift();
+    treeNode.right = treeNodeList.shift();
+}
+
+let root = [3, 5, 1, 6, 2, 0, 8, null, null, 7, 4];
+let actualResult = lowestCommonAncestor(buildBinaryTree(root), buildTreeNode(5), buildTreeNode(1)).val;
+console.log('actualResult =', actualResult, ',expectedResult =', 3);
+
+let actualResult2 = lowestCommonAncestor(buildBinaryTree(root), buildTreeNode(5), buildTreeNode(4)).val;
+console.log('actualResult =', actualResult2, ',expectedResult =', 5);
 //leetcode submit region end(Prohibit modification and deletion)
