@@ -53,7 +53,7 @@ const solveNQueens = function (n) {
             result.push(printResult(cache));
         }
 
-        // 递归与迭代相结合
+        // 回溯递归：递归与迭代相结合
         for (let col = 0; col < n; col++) {
             if (match(col, row, cache)) {
                 // 2.how to find the next
