@@ -37,57 +37,55 @@
  * @return {boolean}
  */
 const exist = function (board, word) {
-    // 1.如何开始找
-    // 2.如何终止查找
-    // 3.find内部， 如何找下一个（缓存存储中间的过程）
+    // 1.how to find the first
+    // 2.how to find the next
+    // 3.how to terminate the execution
 
-    // 1.怎么找
     if (board.length === 0) {
-        return false;
-    }
-    if (word.length === 0) {
         return true;
     }
-    const totalRow = board.length;
-    const totalCol = board[0].length;
-    for (let rowIndex = 0; rowIndex < totalRow; rowIndex++) {
-        for (let colIndex = 0; colIndex < totalCol; colIndex++) {
-            // 动态规划：迭代+递归
-            const result = find(rowIndex, colIndex, 0);
-            if (result) {
+
+    if (word.length === 0) {
+        return false;
+    }
+
+    let totalRow = board.length;
+    let totalCol = board[0].length;
+
+    for (let row = 0; row < totalRow; row++) {
+        for (let col = 0; col < totalCol; col++) {
+            // 1.how to find the first
+            if (found(row, col, 0)) {
                 return true;
             }
         }
     }
+
     return false;
 
-    function find(rowIndex, colIndex, wordIndex) {
-        // 2.什么时候终止
-        if (rowIndex < 0 || rowIndex >= totalRow) {
+    function found(row, col, wordIndex) {
+        if ((row < 0 || row >= totalRow) || (col < 0 || col >= totalCol)) {
             return false;
         }
-        if (colIndex < 0 || colIndex >= totalCol) {
+
+        let letterToFind = board[row][col];
+        if (letterToFind !== word[wordIndex]) {
             return false;
         }
-        let letterOnBoard = board[rowIndex][colIndex];
-        if (letterOnBoard !== word[wordIndex]) {
-            //单词不匹配
-            return false;
-        }
+
         if (wordIndex === word.length - 1) {
-            //已经找到最后一个匹配字母，完全匹配，返回true
+            // 3.how to terminate the execution
             return true;
         }
 
-        // 3.find内部， 怎么找下一步（缓存存储中间的过程）
-        board[rowIndex][colIndex] = undefined;   //先标记旧位置为null，以免重复匹配
+        // 2.how to find the next
+        board[row][col] = undefined;
+        let result = found(row - 1, col, wordIndex + 1) ||
+            found(row + 1, col, wordIndex + 1) ||
+            found(row, col - 1, wordIndex + 1) ||
+            found(row, col + 1, wordIndex + 1);
 
-        const result = find(rowIndex - 1, colIndex, wordIndex + 1) ||
-            find(rowIndex + 1, colIndex, wordIndex + 1) ||
-            find(rowIndex, colIndex - 1, wordIndex + 1) ||
-            find(rowIndex, colIndex + 1, wordIndex + 1);
-
-        board[rowIndex][colIndex] = letterOnBoard;
+        board[row][col] = letterToFind;
 
         return result;
     }
