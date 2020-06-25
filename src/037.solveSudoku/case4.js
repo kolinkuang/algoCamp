@@ -40,60 +40,63 @@ var solveSudoku = function (board) {
 
     const n = board.length;
 
-    // 1.how to find the first
-    backTrack(0, 0, board);
+    const numbers = [];
+    for (let i = 1; i <= 9; i++) {
+        numbers.push(i);
+    }
 
-    function backTrack(row, col, board) {
-        const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    _backTrack(0, 0, numbers, board);
 
-        if (col === 9) {
-            // 2.how to find the next row
-            return backTrack(row + 1, 0, board);
+    function _backTrack(row, col, numbers, board) {
+        // how to find the next row(col is max)
+        if (col === n) {
+            return _backTrack(row + 1, 0, numbers, board);
         }
 
+        // how to terminate the execution(row is max)
         if (row === n) {
-            // 3.how to terminate the execution (max row)
             return true;
         }
 
-        if (board[row][col] !== '.') {
-            // 2.how to find the next column
-            return backTrack(row, col + 1, board);
+        // how to find the next col (ignore those already number-assigned)
+        if (!isNaN(+board[row][col])) {
+            return _backTrack(row, col + 1, numbers, board);
         }
 
+        // iterate over the columns
         for (let num = 1; num <= numbers.length; num++) {
-            num = num + '';
-
-            if (isValid(row, col, num, board)) {
-                board[row][col] = num;
-
-                // 2.how to find the next
-                if (backTrack(row, col + 1, board)) {
+            let currentNum = num + '';
+            // how to find the next column
+            // (current number is not duplicate with any of the previous options)
+            if (_isValid(row, col, currentNum, board)) {
+                board[row][col] = currentNum;
+                if (!_backTrack(row, col + 1, numbers, board)) {
+                    // reset the cell when the previous decision is wrong
+                    board[row][col] = '.';
+                } else {
                     return true;
                 }
-
-                // reset the cell when the previous decision is wrong
-                board[row][col] = '.';
             }
         }
-
-        return false;
     }
 
-    function isValid(row, col, currentNum, board) {
+    function _isValid(row, col, currentNum, board) {
         for (let i = 0; i < board.length; i++) {
+            // if the currentNum is duplicate with any number on the same column but different rows, or same row but different columns
             if (board[i][col] === currentNum || board[row][i] === currentNum) {
                 return false;
             }
 
+            // if the currentNum is duplicate with the sub board cell values
             if (board[Math.trunc(row / 3) * 3 + Math.trunc(i / 3)][Math.trunc(col / 3) * 3 + Math.trunc(i % 3)] === currentNum) {
                 return false;
             }
         }
-
         return true;
     }
+
 };
+//leetcode submit region end(Prohibit modification and deletion)
 
 let board = [
     ['5', '3', '.', '.', '7', '.', '.', '.', '.'],
@@ -108,4 +111,3 @@ let board = [
 ];
 solveSudoku(board)
 console.table(board);
-//leetcode submit region end(Prohibit modification and deletion)
