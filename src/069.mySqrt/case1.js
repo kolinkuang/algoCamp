@@ -51,7 +51,7 @@ let mySqrt = function (x) {
 
 function assert(input, expected) {
     let actual = mySqrt(input);
-    console.assert((actual = mySqrt(input)) === expected, message, input, expected, actual);
+    console.assert(actual === expected, message, input, expected, actual);
 }
 
 const message = 'Input: %s, expect: %s, actual: %s';
