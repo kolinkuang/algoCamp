@@ -22,24 +22,19 @@
  */
 let largestNumber = function (nums) {
 
-    let list = [];
+    const result = [];
 
-    // 时间复杂度：O(n)
     for (let num of nums) {
-        list.push(num + '');
+        result.push('' + num);
     }
 
-    // 降序排列：时间复杂度：少于10个元素：插入排序 O(n^2)；多于等于10个元素：快速排序 O(nlogn)
-    list.sort((a, b) => ('' + b + a) - ('' + a + b));
+    result.sort((a, b) => ('' + b + a) - ('' + a + b));
 
-    if (list[0] === '0') {
-        // 最大值是0，就直接返回 0
+    if (result[0] === '0') {
         return '0';
     }
 
-    // 总时间复杂度：O(n^2) 或 O(nlogn)
-    // 总空间复杂度：O(nlogn)
-    return list.join('');
+    return result.join('');
 };
 //leetcode submit region end(Prohibit modification and deletion)
 
