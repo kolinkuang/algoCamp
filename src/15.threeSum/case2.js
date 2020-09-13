@@ -26,35 +26,29 @@
  */
 let threeSum = function (nums) {
 
-    let result = [];
+    const result = [];
 
-    let n = nums.length;
+    const n = nums.length;
 
-    // 数组排序（时间复杂度：少于10个元素：插入排序，O(N^2)；大于等于10个元素：快速排序，O(NlogN)）
-    nums.sort((a, b) => a - b );
+    nums.sort((a, b) => a - b);
 
-    // 对撞指针（时间复杂度：O(N^2)）
     for (let firstIndex = 0; firstIndex < n; firstIndex++) {
-        if (firstIndex > 0 && nums[firstIndex] === nums[firstIndex - 1]) {
+        if (firstIndex > 0 && nums[firstIndex] === nums[firstIndex-1]) {
             continue;
         }
-        let thirdIndex = n - 1;
-        let target = -nums[firstIndex];
+        const target = -nums[firstIndex];
+        let thirdIndex = n-1;
 
-        for (let secondIndex = firstIndex + 1; secondIndex < n; secondIndex++) {
-            // if second + third < target; then secondIndex++
-            // if second + third > target; then thirdIndex--
-            if (secondIndex > firstIndex + 1 && nums[secondIndex] === nums[secondIndex - 1]) {
+        for (let secondIndex = firstIndex+1; secondIndex < n; secondIndex++) {
+            if (secondIndex > firstIndex+1 && nums[secondIndex] === nums[secondIndex-1]) {
                 continue;
             }
             while (secondIndex < thirdIndex && nums[secondIndex] + nums[thirdIndex] > target) {
                 thirdIndex--;
             }
             if (secondIndex === thirdIndex) {
-                // 该轮循环不存在符合条件的 secondIndex 与 thirdIndex；firstIndex+1 继续
                 break;
             }
-
             if (nums[secondIndex] + nums[thirdIndex] === target) {
                 result.push([nums[firstIndex], nums[secondIndex], nums[thirdIndex]]);
             }

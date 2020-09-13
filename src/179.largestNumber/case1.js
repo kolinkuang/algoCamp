@@ -29,13 +29,7 @@ let largestNumber = function (nums) {
     }
 
     list.sort((a, b) => {
-        if ((a + b) > (b + a)) {
-            return -1;
-        }
-        if ((b + a) > (a + b)) {
-            return 1;
-        }
-        return 0;
+        return ('' + b + a) - ('' + a + b);
     });
 
     if (list[0] === '0') {
@@ -54,4 +48,4 @@ function assert(nums, expected) {
 
 }
 
-assert([10,2], '210');
+assert([10, 2], '210');
