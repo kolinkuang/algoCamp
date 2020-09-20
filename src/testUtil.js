@@ -20,4 +20,10 @@ function iterateBy2(num, handlerFn) {
     }
 }
 
-module.exports = {iterateBy, iterateBy2};
+function assert(msg, actual, expected) {
+    if (JSON.stringify(actual) !== JSON.stringify(expected)) {
+        throw new Error(`${msg}; actual: ${actual}, expected: ${expected}`);
+    }
+}
+
+module.exports = {iterateBy, iterateBy2, assert};
