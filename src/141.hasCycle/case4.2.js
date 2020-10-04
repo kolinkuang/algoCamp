@@ -53,36 +53,30 @@
  * @return {boolean}
  */
 let hasCycle = function (head) {
-    if (!head) {
-        return false;
+    // 迭代，快慢指针
+    // 时间复杂度：O(n)
+    // 空间复杂度：O(1)
+
+    let fast = head;
+    let slow = head;
+
+    while (fast && fast.next) {
+        fast = fast.next.next;
+        slow = slow.next;
+        if (fast === slow) {
+            return true;
+        }
     }
 
-    let nodeToIndex = {};
-    let current = head;
-    while (current) {
-        if (nodeToIndex[current] !== -1) {
-            return true;
-        } else {
-            nodeToIndex[current] = 1;
-        }
-        current = current.next;
-    }
     return false;
 };
+
+//head = [3,2,0,-4], pos = 1
+//head = [1,2], pos = 0
+//head = [1], pos = -1
 
 function ListNode(val) {
     this.val = val;
     this.next = null;
 }
-
-let head, pos;
-head = [3,2,0,-4], pos = 1;
-console.log(hasCycle(head));
-
-head = [1,2], pos = 0;
-console.log(hasCycle(head));
-
-head = [1], pos = -1;
-console.log(hasCycle(head));
-
 //leetcode submit region end(Prohibit modification and deletion)

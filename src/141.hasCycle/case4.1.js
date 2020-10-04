@@ -53,36 +53,30 @@
  * @return {boolean}
  */
 let hasCycle = function (head) {
-    if (!head) {
-        return false;
-    }
+    // 迭代，哈希表
+    // 时间复杂度：O(n)
+    // 空间复杂度：O(n)
 
-    let nodeToIndex = {};
+    const hashTable = new Set();
     let current = head;
     while (current) {
-        if (nodeToIndex[current] !== -1) {
+        if (hashTable.has(current)) {
             return true;
         } else {
-            nodeToIndex[current] = 1;
+            hashTable.add(current);
+            current = current.next;
         }
-        current = current.next;
     }
+
     return false;
 };
+
+//head = [3,2,0,-4], pos = 1
+//head = [1,2], pos = 0
+//head = [1], pos = -1
 
 function ListNode(val) {
     this.val = val;
     this.next = null;
 }
-
-let head, pos;
-head = [3,2,0,-4], pos = 1;
-console.log(hasCycle(head));
-
-head = [1,2], pos = 0;
-console.log(hasCycle(head));
-
-head = [1], pos = -1;
-console.log(hasCycle(head));
-
 //leetcode submit region end(Prohibit modification and deletion)

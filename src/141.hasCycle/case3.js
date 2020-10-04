@@ -53,8 +53,12 @@
  * @return {boolean}
  */
 let hasCycle = function (head) {
+    // 迭代，快慢指针
+    // 时间复杂度：O(n)
+    // 空间复杂度：O(1)
     let fast = head;
     let slow = head;
+    // 只要是环形链表，fast 指针就可以无限循环，就一定会有套圈的情况出现
     while (fast && fast.next) {
         fast = fast.next.next;
         slow = slow.next;

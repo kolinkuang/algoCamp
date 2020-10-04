@@ -53,6 +53,9 @@
  * @return {boolean}
  */
 let hasCycle = function (head) {
+    // 迭代，哈希表
+    // 时间复杂度：O(n)
+    // 空间复杂度：O(n)
     let walked = new Set();
     let current = head;
 
