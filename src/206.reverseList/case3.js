@@ -29,11 +29,14 @@ let reverseList = function(head) {
 
 function _reverse(previous, current) {
     if (!current) {
+        // reach the end of the list
         return previous;
     }
 
-    let next = current.next;
-    current.next = previous;
+    // let next = current.next;
+    // current.next = previous;
+    let next;
+    [next, current.next] = [current.next, previous];
 
     return _reverse(current, next);
 }
@@ -52,11 +55,13 @@ function printList(head) {
     }
     let finalResult = result.join(',');
     console.log(finalResult);
-    return finalResult;
 }
 
 function generateRawList(num = 5) {
-    let nodeList = {};
+    if (typeof num !== 'number') {
+        throw new TypeError('Not a number');
+    }
+    let nodeList = [];
     for (let i = num; i > 0; i--) {
         let node = new ListNode(i);
         nodeList[i] = node;

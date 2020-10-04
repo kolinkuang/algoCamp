@@ -55,7 +55,6 @@ function printList(head) {
     }
     let finalResult = result.join(',');
     console.log(finalResult);
-    return finalResult;
 }
 
 function generateRawList(num = 5) {

@@ -22,31 +22,28 @@
  * @param {ListNode} head
  * @return {ListNode}
  */
-let reverseList = function (head) {
-    //迭代
-    let current = head;
-    let previous = null;
-    while (current) {
-        // console.log([previous && previous.val, current && current.val, current && current.next && current.next.val]);
-        [current.next, previous, current] = [previous, current, current.next];
-        // console.log([current && current.next && current.next.val, previous && previous.val, current && current.val]);
-        // console.log('===================');
+let reverseList = function(head) {
+    // 递归
+    return _reverse(null, head);
+};
 
-        // let next = current.next;
-        // current.next = previous;
-        // previous = current;
-        // current = next;
+function _reverse(previous, current) {
+    if (!current) {
+        return previous;
     }
 
-    return previous;
-};
+    let next = null;
+    [current.next, next] = [previous, current.next];
+
+    return _reverse(current, next);
+}
 
 function ListNode(val) {
     this.val = val;
     this.next = null;
 }
 
-function printList(head) {
+function _printList(head) {
     let current = head;
     let result = [];
     while (current) {
@@ -57,8 +54,11 @@ function printList(head) {
     console.log(finalResult);
 }
 
-function generateRawList(num = 5) {
-    let nodeList = {};
+function _generateRawList(num = 5) {
+    if (typeof num !== 'number') {
+        throw new TypeError('Not a number');
+    }
+    let nodeList = [];
     for (let i = num; i > 0; i--) {
         let node = new ListNode(i);
         nodeList[i] = node;
@@ -69,7 +69,7 @@ function generateRawList(num = 5) {
     return nodeList[1];
 }
 
-let head = generateRawList();
+let head = _generateRawList();
 let newHead = reverseList(head);
-printList(newHead);
+_printList(newHead);
 //leetcode submit region end(Prohibit modification and deletion)
