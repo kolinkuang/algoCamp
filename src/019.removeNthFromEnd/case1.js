@@ -88,9 +88,13 @@ function _generateLinkedList(list) {
 
 const message = 'Input: %s, expect: %s, actual: %s';
 
-function assert(input, expected) {
-    const actualList = _printList(removeNthFromEnd(_generateLinkedList(input.list), input.n));
+function _assert(input, expected, fn) {
+    const actualList = _printList(fn.call(null, _generateLinkedList(input.list), input.n));
     console.assert(JSON.stringify(expected) === JSON.stringify(actualList), message, JSON.stringify(input), expected, actualList);
+}
+
+function assert(input, expected) {
+    _assert(input, expected, removeNthFromEnd);
 }
 
 assert({list: [1, 2, 3, 4, 5], n: 2}, [1, 2, 3, 5]);
