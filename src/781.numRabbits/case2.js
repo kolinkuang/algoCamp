@@ -45,6 +45,11 @@ var numRabbits = function(answers) {
     for (const [y, x] of count.entries()) {
         ans += Math.floor((x + y) / (y + 1)) * (y + 1);
     }
+
     return  ans;
 };
+
+const answers = [1,0,1,0,0];
+const result = numRabbits(answers);
+console.log('result:', result);
 //leetcode submit region end(Prohibit modification and deletion)

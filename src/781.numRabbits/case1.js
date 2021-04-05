@@ -37,15 +37,21 @@
  */
 var numRabbits = function(answers) {
     const count = {};
-    for (const y in answers) {
+    for (const y of answers) {
         count[y] = (count[y] || 0) + 1;
     }
+
     let ans = 0;
     Object.keys(count).forEach(key => {
-        const y = key;
+        const y = +key;
         const x = count[key];
         ans += Math.floor((x + y) / (y + 1)) * (y + 1);
     });
+
     return ans;
 };
+
+const answers = [1,0,1,0,0];
+const result = numRabbits(answers);
+console.log('result:', result);
 //leetcode submit region end(Prohibit modification and deletion)
