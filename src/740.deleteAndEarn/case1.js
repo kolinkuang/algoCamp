@@ -69,6 +69,6 @@ var deleteAndEarn = function(nums) {
     return second;
 
     // 时间复杂度：O(m+n)；n：原数组长度；m：原数组中的最大数字
-    // 空间复杂度：O(m+n)；n：原数组长度；m：原数组中的最大数字
+    // 空间复杂度：O(max(m,n))；n：原数组长度；m：原数组中的最大数字
 };
 //leetcode submit region end(Prohibit modification and deletion)
