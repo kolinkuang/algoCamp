@@ -57,4 +57,7 @@ var reversePairs = function(nums) {
 const input = [4,5,6,7];
 console.log(reversePairs(input));
 // 0
+
+// 时间复杂度：O(nlog(n))，同归并排序
+// 空间复杂度：O(n)，同归并排序
 //leetcode submit region end(Prohibit modification and deletion)
