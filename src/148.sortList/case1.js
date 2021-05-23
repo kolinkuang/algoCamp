@@ -53,6 +53,7 @@
  * @param {ListNode} head
  * @return {ListNode}
  */
+// [To be completed]
 var sortList = function(head) {
     // 链表的归并排序实现
     let count = 0;
@@ -70,6 +71,9 @@ function _mergeSort(node, count) {
         return node;
     }
 
+    console.log('node:', node);
+    // console.log('node.val:', node.val);
+
     let left = Math.floor(count / 2), right = count - left;
 
     // console.log('count:', count);
@@ -82,7 +86,7 @@ function _mergeSort(node, count) {
         rp = rp.next;
     }
 
-    console.log('rp.val:', rp.val);
+    // console.log('rp.val:', rp.val);
     // 当到此行时，rp 指向左半部分的最后一个节点
 
     // 将左右两半的区间彻底断开
@@ -113,4 +117,6 @@ function _mergeSort(node, count) {
 
     return p.next;
 }
+
+// input: [4,2,1,3]
 //leetcode submit region end(Prohibit modification and deletion)
