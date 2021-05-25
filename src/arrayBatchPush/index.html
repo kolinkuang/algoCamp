@@ -1,0 +1,46 @@
+<script src="https://cdn.bootcss.com/ramda/0.25.0/ramda.min.js"></script>
+<script>
+    const splice = function (arr) {
+        let cache = arr || []
+        return {
+            add: function (value) {
+                cache.push(value)
+            },
+            get: function () {
+                return cache.reverse()
+            }
+        }
+    }
+
+    let startTime = null;
+    let useTime = null;
+    let arr = [];
+    let len = 100000;
+    let arrT = splice(arr)
+    startTime = performance.now()
+    for (let i = 0; i < len; i++) {
+        arrT.add(i)
+    }
+    arr = arrT.get()
+    useTime = performance.now() - startTime
+    console.log(arr)
+    console.log(useTime)
+
+    // arr = []
+    // startTime = performance.now()
+    // for (let i = 0; i < len; i++) {
+    //     arr = R.prepend(i, arr)
+    // }
+    // useTime = performance.now() - startTime
+    // console.log(arr)
+    // console.log(useTime)
+
+    arr = []
+    startTime = performance.now()
+    for (let i = 0; i < len; i++) {
+        arr.splice(0, 0, i)
+    }
+    useTime = performance.now() - startTime
+    console.log(arr)
+    console.log(useTime)
+</script>
