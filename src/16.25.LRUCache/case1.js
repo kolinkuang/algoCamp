@@ -36,64 +36,53 @@ class Node {
     }
 
     removeThis() {
-        if (this.prev) {
-            this.prev.next = this.next;
-        }
-        if (this.next) {
-            this.next.prev = this.prev;
-        }
+        this.prev.next = this.next;
+        this.next.prev = this.prev;
         this.next = this.prev = null;
     }
 
     insertPrev(node) {
-        node.next = this;
-        node.prev = this.prev;
-        if (this.prev) {
-            this.prev.next = node;
-        }
-        this.prev = node;
+        [node.next, node.prev] = [this, this.prev];
+        [this.prev.next, this.prev] = [node, node];
     }
 
 }
 
 class HashList {
 
-    constructor(tail, head) {
+    constructor(capacity) {
+        this.capacity = capacity;
         this.head = new Node();
         this.tail = new Node();
-        this.data = new Map();
-        this.head.next = tail;
-        this.tail.prev = head;
+        this.map = new Map();
+        [this.head.next, this.tail.prev] = [this.tail, this.head];
     }
 
     put(key, value) {
-        //TODO
-        if (this.data.has(key)) {
-            this.data.get(key).value = value;
-            this.data.get(key).removeThis();
+        if (this.map.has(key)) {
+            const node = this.map.get(key);
+            node.value = value;
+            node.removeThis();
         } else {
-            this.data.set(key, new Node(key, value));
+            this.map.set(key, new Node(key, value));
+        }
+        this.tail.insertPrev(this.map.get(key));
+        if (this.map.size > this.capacity) {
+            const node = this.head.next;
+            node.removeThis();
+            this.map.delete(node.key);
         }
     }
 
     get(key) {
-        if (!this.data.has(key)) {
+        if (!this.map.has(key)) {
             return -1;
         }
-        this.data.get(key).removeThis();
-        this.tail.insertPrev(this.data.get(key));
-        return this.data.get(key).value;
-    }
-
-    removeThis() {
-        if (this.prev) {
-            this.prev.next = this.next;
-        }
-        if (this.enxt) {
-            this.next.prev = this.prev;
-        }
-        this.next = this.prev = null;
-        return this;
+        // 将 node 移到尾部
+        const node = this.map.get(key);
+        node.removeThis();
+        this.tail.insertPrev(node);
+        return node.value;
     }
 
 }
@@ -101,15 +90,15 @@ class HashList {
 /**
  * @param {number} capacity
  */
-var LRUCache = function(capacity) {
-    this.h = new HashList();
+var LRUCache = function (capacity) {
+    this.h = new HashList(capacity);
 };
 
 /**
  * @param {number} key
  * @return {number}
  */
-LRUCache.prototype.get = function(key) {
+LRUCache.prototype.get = function (key) {
     return this.h.get(key);
 };
 
@@ -118,9 +107,21 @@ LRUCache.prototype.get = function(key) {
  * @param {number} value
  * @return {void}
  */
-LRUCache.prototype.put = function(key, value) {
+LRUCache.prototype.put = function (key, value) {
     this.h.put(key, value);
 };
+
+const obj = new LRUCache(2);
+obj.put(1, 1);
+obj.put(2, 2);
+console.log(obj.get(1));    // 1
+obj.put(3, 3);
+console.log(obj.get(2));    // -1
+obj.put(4, 4);
+console.log(obj.get(1));    // -1
+console.log(obj.get(3));    // 3
+console.log(obj.get(4));    // 4
+
 
 /**
  * Your LRUCache object will be instantiated and called as such:
