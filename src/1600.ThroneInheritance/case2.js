@@ -143,6 +143,17 @@ ThroneInheritance.prototype.getInheritanceOrder = function() {
     }
 };
 
+// 时间复杂度：
+// ThroneInheritance: O(1)
+// birth: O(1)
+// death: O(1)
+// getInheritanceOrder: O(1)
+// 空间复杂度：
+// this.edges: O(n)
+// this.dead: O(n)
+// 递归栈空间：O(n)
+// n: 多叉树节点数
+
 /**
  * Your ThroneInheritance object will be instantiated and called as such:
  * var obj = new ThroneInheritance(kingName)
