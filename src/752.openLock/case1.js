@@ -75,26 +75,26 @@ var openLock = function(deadends, target) {
     }
 
     const dead = new Set(deadends);
-    if (dead.has(target)) {
+    if (dead.has('0000')) {
         return -1;
     }
 
     let step = 0;
+    const queue = ['0000'];
+
     const checkSet = new Set();
     checkSet.add('0000');
-    const queue = ['0000'];
+
     while (queue.length) {
         step++;
-        for (let i = 0; i < queue.length; i++) {
+        const length = queue.length;
+        for (let i = 0; i < length; i++) {
             const cur = queue.pop();
-            if (cur === target) {
-                return step;
-            }
             for (const next of get(cur)) {
                 if (!checkSet.has(next) && !dead.has(next)) {
-                    // if (cur === target) {
-                    //     return step;
-                    // }
+                    if (next === target) {
+                        return step;
+                    }
                     queue.unshift(next);
                     checkSet.add(next);
                 }
@@ -105,25 +105,25 @@ var openLock = function(deadends, target) {
     return -1;
 };
 
-function get(str) {
+function get(status) {
     const result = [];
-    const array = Array.from(str);
-    for (let i = 0; i < array.length; i++) {
+    const array = Array.from(status);
+    for (let i = 0; i < 4; i++) {
         let num = +array[i];
         array[i] = backwards(num);
         result.push(array.join(''));
 
         array[i] = forwards(num);
         result.push(array.join(''));
-    }
 
-    console.log('result:', result);
+        array[i] = num;
+    }
 
     return result;
 }
 
 function backwards(num) {
-    return num === 0 ? '9' : num - 1;
+    return num === 0 ? 9 : num - 1;
 }
 
 function forwards(num) {
