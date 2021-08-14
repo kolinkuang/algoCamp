@@ -119,5 +119,5 @@ var unhappyFriends = function(n, preferences, pairs) {
 };
 
 // 时间复杂度：O(n^2)
-// 空间复杂度：O(n)
+// 空间复杂度：O(n^2)
 //leetcode submit region end(Prohibit modification and deletion)
