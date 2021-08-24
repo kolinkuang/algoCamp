@@ -60,38 +60,24 @@
  * @return {number}
  */
 var getMaximumGenerated = function(n) {
-    const cache = new Map();
-    cache.set(0, 0);
-    cache.set(1, 1);
+    if (n === 0) {
+        return 0;
+    }
 
-    getNum(n, cache);
+    const nums = new Array(n + 1).fill(0);
+    nums[1] = 1;
 
-    return Math.max(...cache.values());
+    for (let i = 1; i <= n; i++) {
+        if (!(i % 2)) {
+            nums[i] = nums[i / 2];
+        } else {
+            const j = (i - 1) / 2;
+            nums[i] = nums[j] + nums[j + 1];
+        }
+    }
+
+    return Math.max(...nums);
 };
-
-// TODO: 递归会有漏洞，只能用遍历
-function getNum(k, cache) {
-    if (cache.has(k)) {
-        return cache.get(k);
-    }
-
-    let value = 0;
-    if (!(k % 2)) {
-        // 偶数
-        value = getNum(k / 2, cache);
-    } else {
-        // 奇数
-        const i = (k - 1) / 2;
-        value = getNum(i, cache) + getNum(i + 1, cache);
-    }
-
-    cache.set(k, value);
-    console.log(cache);
-    return value;
-}
-
 // 时间复杂度：O(n)
 // 空间复杂度：O(n) (栈递归空间，以及缓存空间)
-
-console.log(getMaximumGenerated(4));    // 2
 //leetcode submit region end(Prohibit modification and deletion)
